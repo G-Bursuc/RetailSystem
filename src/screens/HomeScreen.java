@@ -1,7 +1,10 @@
 package screens;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -19,9 +22,21 @@ public class HomeScreen extends JFrame{
 		// create elements
 		JPanel panel = new JPanel();
 		
+		/*Test button to test if the interface is showing properly can be DELETED when merging code*/
+		JButton testButton = new JButton("ADD ITEM");
+		testButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new AddItemScreen(itemList);
+			}
+		});
+		
+		
 		// add elements to the panel, configure miglayout and add panel to the JFrame
 		panel.setLayout(new MigLayout());
 		add(panel);
+		add(testButton);
+		
+		
 		
 		// set frame properties
 		setTitle("Home Screen");
