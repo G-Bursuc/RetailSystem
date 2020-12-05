@@ -68,8 +68,8 @@ public class HomeScreen extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-		});				
-		
+		});	
+    
 		// add elements to the panel, configure miglayout and add panel to the JFrame
 		panel.setLayout(new MigLayout("", "20", "20"));
 		panel.add(title, "span 5, align center, wrap");
@@ -79,7 +79,7 @@ public class HomeScreen extends JFrame{
 		panel.add(shoppingButton);
 		panel.add(exitButton);
 		add(panel);
-        
+    
 		// set frame properties
 		setTitle("Home Screen");
 		setSize(500, 200);
