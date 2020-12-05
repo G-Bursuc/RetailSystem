@@ -1,8 +1,16 @@
+//Tami Adeduntan
+
+
 package screens;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
@@ -16,16 +24,65 @@ public class HomeScreen extends JFrame{
 	Order shoppingBasket = null;
 	
 	public HomeScreen() {
-		// create elements
+		// create elements 
 		JPanel panel = new JPanel();
+		JButton stockButton = new JButton("Stock");
+		JButton calculatorButton = new JButton("Calculator");
+		JButton itemButton = new JButton("Item Packing");
+		JButton shoppingButton = new JButton("Shopping Basket");
+		JButton exitButton = new JButton("Exit");
+		
+		// setting title and font
+		JLabel title;
+		title = new JLabel("Retail System"); 
+		Font rstitle = new Font("Arial", Font.PLAIN, 30);
+        title.setFont(rstitle); 
+		
+		// BUTTONS
+		// displays the stock window
+		stockButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new StockScreen();
+			}
+		});
+		
+		calculatorButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ChangeScreen(shoppingBasket);
+			}
+		});
+
+		itemButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new BoxingScreen();
+			}
+		});
+		
+		shoppingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new ShoppingScreen();
+			}
+		});
+		
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});				
 		
 		// add elements to the panel, configure miglayout and add panel to the JFrame
-		panel.setLayout(new MigLayout());
+		panel.setLayout(new MigLayout("", "20", "20"));
+		panel.add(title, "span 5, align center, wrap");
+		panel.add(stockButton);
+		panel.add(calculatorButton);
+		panel.add(itemButton);
+		panel.add(shoppingButton);
+		panel.add(exitButton);
 		add(panel);
-		
+        
 		// set frame properties
 		setTitle("Home Screen");
-		setSize(580, 600);
+		setSize(500, 200);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
