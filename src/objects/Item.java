@@ -63,5 +63,10 @@ public class Item {
 				+ "\nItem Type: " + this.typeOfItem 
 				+ "\nItem Quantity: " + this.itemQuantity;
 	}
+	
+	//display in the shopping screen combo box item info
+	public String displayInCombo() {
+		return "Item ID: " + this.itemID + " Item Name: " + this.itemName;
+	}
 
 }
