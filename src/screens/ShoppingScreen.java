@@ -44,7 +44,10 @@ public class ShoppingScreen extends JFrame{
 		JTextField quantity = new JTextField();
 		quantity.setColumns(10);
 		JButton calculate = new JButton("calculate");
-		
+		JLabel showVat = new JLabel();
+		JLabel showPrice = new JLabel();
+		JLabel showTotal = new JLabel();
+		JButton addToBasket = new JButton("Add to basket");
 		JButton backToMenu = new JButton("back to menu");
 		
 		//use the MigLayout manager
@@ -62,7 +65,7 @@ public class ShoppingScreen extends JFrame{
 				//for each item in the list of items
 				for(Item item : itemlist) {
 					//if the item type is the same as the one entered by the user and the stock is not empty
-					if(item.getTypeOfItem().equals(selectedType) && item.getItemQuantity() != 0) {
+					if(item.getTypeOfItem().equalsIgnoreCase(selectedType) && item.getItemQuantity() != 0) {
 						//add to the combo box the item
 						selectedItemCombo.addItem(item.displayInCombo());
 						found = true;
@@ -73,6 +76,7 @@ public class ShoppingScreen extends JFrame{
 				if(found == false) {
 					//display message that there are no items of that type
 					JOptionPane.showMessageDialog(null, "There are no items with this type available", "Alert", JOptionPane.WARNING_MESSAGE);
+					selectedItemCombo.removeAllItems();
 				}
 			}
 		});
@@ -104,6 +108,13 @@ public class ShoppingScreen extends JFrame{
 		//actionListener for the calculate button - after a user has entered a quantity number
 		calculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//variables for the VAT
+				double price = 0;
+				double rate = 0;
+				double vatAmount = 0;
+				double totalAfterVat = 0;
+				boolean found = false;
+				
 				//if there is no item selected display message
 				if(selectedItemCombo.getItemCount() == 0) {
 					vatRate.setText("");
@@ -127,31 +138,78 @@ public class ShoppingScreen extends JFrame{
 							else {
 								//otherwise set the chosen item equal to the item the loop is on
 								chosenItem = item;
+								found = true;
 							}
 						}
 					}
+					
+					//if everything above is a success assign appropriate values for each type
+					if(found == true) {
+						if(selectedType.equals("Luxury")) {
+							//if the selected type is luxury assign appropriate values
+							rate = 20;
+							price = 50 * Integer.parseInt(quantity.getText());
+						}
+						else if(selectedType.equals("Essential")) {
+							//if the selected type is essential assign appropriate value
+							rate = 10;
+							price = 30 * Integer.parseInt(quantity.getText());
+						}
+						else if(selectedType.equals("Gift")) {
+							//if the selected type is gift assign appropriate values
+							rate = 5;
+							price = 20 * Integer.parseInt(quantity.getText());
+						}
+						
+						//calculate the VAT
+						vatAmount = rate * (price / 100);
+						totalAfterVat = price + vatAmount;
+						
+						//display the VAT
+						showPrice.setText("Price for this item (without VAT): €" + price);
+						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
+						showTotal.setText("Total (with VAT): €" + totalAfterVat);
+					}
 				}
+			}
+		});
+		
+		//actionListener for the adding to basket button
+		addToBasket.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//clear all fields so the user can buy more items if they want
+				selectedItemCombo.removeAllItems();
+				quantity.setText("");
+				showVat.setText("");
+				showPrice.setText("");
+				showTotal.setText("");
+				vatRate.setText("");
 			}
 		});
 		
 		//actionListener for the back to menu button
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//close the shopping screen page
 				dispose();
 			}
 		});
 		
 		// add elements to the panel and add panel to the JFrame
 		panel.add(comboLabel);
-		panel.add(itemCombo);
+		panel.add(itemCombo, "split 2");
 		panel.add(okButton, "wrap");
 		panel.add(itemComboLabel);
-		panel.add(selectedItemCombo);
+		panel.add(selectedItemCombo, "split 2");
 		panel.add(okButton2, "wrap");
 		panel.add(vatRate, "wrap");
 		panel.add(quantityLabel, "wrap");
-		panel.add(quantity, "wrap");
+		panel.add(quantity, "split 2");
 		panel.add(calculate, "wrap");
+		panel.add(showPrice, "wrap");
+		panel.add(showVat, "wrap");
+		panel.add(showTotal, "wrap");
+		panel.add(addToBasket, "split 2");
 		panel.add(backToMenu);
 		add(panel);
 		
