@@ -14,12 +14,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
+import objects.Box;
 import objects.Item;
 import objects.Order;
 
 public class HomeScreen extends JFrame{
 	// array list to store the stock items
 	ArrayList<Item> itemList = new ArrayList<Item>();
+	// array list to store the boxes
+	ArrayList<Box> boxList = new ArrayList<Box>();
 	// global order to store the last order from the shopping basket, to be used for change calculator
 	Order shoppingBasket = null;
 	
@@ -42,7 +45,7 @@ public class HomeScreen extends JFrame{
 		// displays the stock window
 		stockButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new StockScreen();
+				new AddItemScreen(itemList);
 			}
 		});
 		
@@ -54,13 +57,13 @@ public class HomeScreen extends JFrame{
 
 		itemButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new BoxingScreen();
+				new BoxingScreen(boxList, itemList);
 			}
 		});
 		
 		shoppingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new ShoppingScreen();
+				new ShoppingScreen(itemList);
 			}
 		});
 		
