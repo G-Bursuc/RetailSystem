@@ -10,9 +10,9 @@ import net.miginfocom.swing.MigLayout;
 import objects.Item;
 
 
-public class AddItemScreen extends JFrame {
+public class AddStockScreen extends JFrame {
 	ArrayList<Item> list = null;
-	public AddItemScreen(ArrayList<Item> itemList) {
+	public AddStockScreen(ArrayList<Item> itemList) {
 		list = itemList;
 		
 		//adding components
