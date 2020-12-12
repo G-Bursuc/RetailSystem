@@ -14,19 +14,29 @@ import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import objects.Item;
+import objects.Order;
+import objects.ShoppingBasket;
 
 public class ShoppingScreen extends JFrame{
 	
 	//arrayList that stores items
 	ArrayList<Item> itemlist = null;
+	//the final order after all items have been added to the basket
+	Order order;
 	//the type of item selected
 	private String selectedType;
 	//the item chosen
 	private Item chosenItem;
+	//total cost of each item
+	private double totalAfterVat = 0;
+	//total cost for the order
+	private double totalCost = 0;
 	
-	public ShoppingScreen(ArrayList<Item> itemList) {
-		//copy the elements of the original list to the declared list
+	public ShoppingScreen(ArrayList<Item> itemList, Order shoppingBasket) {
+		//copy the elements of the original list to the declared list of items
 		itemlist = itemList;
+		//the order
+		order = shoppingBasket;
 		
 		// create elements
 		JPanel panel = new JPanel();
@@ -49,6 +59,9 @@ public class ShoppingScreen extends JFrame{
 		JLabel showTotal = new JLabel();
 		JButton addToBasket = new JButton("Add to basket");
 		JButton backToMenu = new JButton("back to menu");
+		
+		//arrayList of the shopping basket in which the added items are kept
+		ArrayList<ShoppingBasket> itemsInBasket = new ArrayList<ShoppingBasket>();
 		
 		//use the MigLayout manager
 		panel.setLayout(new MigLayout());
@@ -112,7 +125,6 @@ public class ShoppingScreen extends JFrame{
 				double price = 0;
 				double rate = 0;
 				double vatAmount = 0;
-				double totalAfterVat = 0;
 				boolean found = false;
 				
 				//if there is no item selected display message
@@ -177,6 +189,19 @@ public class ShoppingScreen extends JFrame{
 		//actionListener for the adding to basket button
 		addToBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//for each item in the list of items
+				for(Item item : itemlist) {
+					//if the item matches the chosen item
+					if(item == chosenItem) {
+						//add the item so the basket
+						ShoppingBasket basket= new ShoppingBasket(item, Integer.parseInt(quantity.getText()), totalAfterVat);
+						itemsInBasket.add(basket);	
+						//update the stock numbers of that item
+						item.setItemQuantity(item.getItemQuantity() - Integer.parseInt(quantity.getText()));
+						}
+				}
+				//create the order with the items in the basket
+				order = new Order(itemsInBasket, totalCost);
 				//clear all fields so the user can buy more items if they want
 				selectedItemCombo.removeAllItems();
 				quantity.setText("");
