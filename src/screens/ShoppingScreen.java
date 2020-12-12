@@ -10,11 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-<<<<<<< HEAD
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-=======
->>>>>>> 4e9ec35271b4ca8d3656706a38b17d184e14fbbf
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
@@ -192,9 +189,9 @@ public class ShoppingScreen extends JFrame{
 						totalAfterVat = price + vatAmount;
 						
 						//display the VAT
-						showPrice.setText("Price for this item (without VAT): €" + price);
-						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
-						showTotal.setText("Total (with VAT): €" + totalAfterVat);
+						showPrice.setText("Price for this item (without VAT): â‚¬" + price);
+						showVat.setText("VAT(" + rate + "%): â‚¬" + vatAmount);
+						showTotal.setText("Total (with VAT): â‚¬" + totalAfterVat);
 					}
 				}
 			}
