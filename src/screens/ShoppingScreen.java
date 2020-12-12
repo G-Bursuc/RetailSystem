@@ -10,25 +10,38 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+<<<<<<< HEAD
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+=======
+>>>>>>> 4e9ec35271b4ca8d3656706a38b17d184e14fbbf
 import javax.swing.JTextField;
 
 import net.miginfocom.swing.MigLayout;
 import objects.Item;
+import objects.Order;
+import objects.ShoppingBasket;
 
 public class ShoppingScreen extends JFrame{
 	
 	//arrayList that stores items
 	ArrayList<Item> itemlist = null;
+	//the final order after all items have been added to the basket
+	Order order;
 	//the type of item selected
 	private String selectedType;
 	//the item chosen
 	private Item chosenItem;
+	//total cost of each item
+	private double totalAfterVat = 0;
+	//total cost for the order
+	private double totalCost = 0;
 	
-	public ShoppingScreen(ArrayList<Item> itemList) {
-		//copy the elements of the original list to the declared list
+	public ShoppingScreen(ArrayList<Item> itemList, Order shoppingBasket) {
+		//copy the elements of the original list to the declared list of items
 		itemlist = itemList;
+		//the order
+		order = shoppingBasket;
 		
 		// create elements
 		JPanel panel = new JPanel();
@@ -61,7 +74,8 @@ public class ShoppingScreen extends JFrame{
 		//for scroll pane
 		bottomScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		bottomScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
+		//arrayList of the shopping basket in which the added items are kept
+		ArrayList<ShoppingBasket> itemsInBasket = new ArrayList<ShoppingBasket>();
 		//use the MigLayout manager
 		panel.setLayout(new MigLayout());
 		
@@ -181,7 +195,6 @@ public class ShoppingScreen extends JFrame{
 						showPrice.setText("Price for this item (without VAT): €" + price);
 						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
 						showTotal.setText("Total (with VAT): €" + totalAfterVat);
-						
 					}
 				}
 			}
@@ -190,6 +203,19 @@ public class ShoppingScreen extends JFrame{
 		//actionListener for the adding to basket button
 		addToBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//for each item in the list of items
+				for(Item item : itemlist) {
+					//if the item matches the chosen item
+					if(item == chosenItem) {
+						//add the item so the basket
+						ShoppingBasket basket= new ShoppingBasket(item, Integer.parseInt(quantity.getText()), totalAfterVat);
+						itemsInBasket.add(basket);	
+						//update the stock numbers of that item
+						item.setItemQuantity(item.getItemQuantity() - Integer.parseInt(quantity.getText()));
+						}
+				}
+				//create the order with the items in the basket
+				order = new Order(itemsInBasket, totalCost);
 				//clear all fields so the user can buy more items if they want
 				selectedItemCombo.removeAllItems();
 				quantity.setText("");
@@ -215,7 +241,6 @@ public class ShoppingScreen extends JFrame{
 		}
 			
 		});
-		
 		//actionListener for the back to menu button
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -245,6 +270,7 @@ public class ShoppingScreen extends JFrame{
 		panel.add(totalCost, "split 2");
 		panel.add(backToMenu, "wrap");
 		panel.add(bottomScrollPane, "span");
+		panel.add(backToMenu);
 		add(panel);
 		
 		// set frame properties
