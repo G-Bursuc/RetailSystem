@@ -12,9 +12,9 @@ import objects.Item;
 
 public class AddItemScreen extends JFrame {
 	ArrayList<Item> list = null;
+	Item aItem;
 	public AddItemScreen(ArrayList<Item> itemList) {
 		list = itemList;
-		
 		//adding components
 		JPanel panel = new JPanel();
 		
@@ -29,17 +29,15 @@ public class AddItemScreen extends JFrame {
 		JTextField itemQuantityField = new JTextField(20);
 	    
 		JButton submitBtn = new JButton("ADD ITEM");
+		JButton viewButton = new JButton("VIEW ITEM");
 		
-		JTextArea bottomArea = new JTextArea(20, 20);
+		JTextArea bottomArea = new JTextArea(30, 30);
 		JScrollPane bottomScrollPane = new JScrollPane(bottomArea);
 		
 		//constraints
 		//for scroll pane
 		bottomScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		bottomScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		//for text area
-		bottomArea.setEditable(false);	
 		
 		submitBtn.addActionListener(new ActionListener() {
 			
@@ -48,20 +46,23 @@ public class AddItemScreen extends JFrame {
 				int quantity =  Integer.parseInt(itemQuantityField.getText());
 				String type = comboItem.getSelectedItem().toString();
 				
-				Item aItem = new Item(name, type, quantity);
+				aItem = new Item(name, type, quantity);
 				
 				itemList.add(aItem);	
-				
-				
-				//changing text area
-				String existingCustomers = bottomArea.getText();
-				bottomArea.setText(existingCustomers + "\n" + aItem.toString());
-		
-				itemNameField.setText("");
-				itemQuantityField.setText("");
 			}
 		});
 		
+		viewButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {	
+				for (Item aItem : itemList) {
+					bottomArea.append(aItem + "\n");
+				}
+			}
+			
+		});
+		
+		bottomArea.setEditable(false);
 		
 		panel.setLayout(new MigLayout());
 		panel.add(itemNameLbl);
@@ -71,6 +72,7 @@ public class AddItemScreen extends JFrame {
 		panel.add(itemTypeLbl);
 		panel.add(comboItem, "wrap");
 		panel.add(submitBtn, "wrap");
+		panel.add(viewButton, "wrap");
 		panel.add(bottomScrollPane);
 		add(panel);
 		
