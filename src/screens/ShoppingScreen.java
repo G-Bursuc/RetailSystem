@@ -22,24 +22,26 @@ import objects.ShoppingBasket;
 public class ShoppingScreen extends JFrame{
 	
 	//arrayList that stores items
-	ArrayList<Item> itemlist = null;
-	//the final order after all items have been added to the basket
-	Order order;
-	//the type of item selected
-	private String selectedType;
-	//the item chosen
-	private Item chosenItem;
-	//total cost of each item
-	private double totalAfterVat = 0;
-	//total cost for the order
-	private double totalCost = 0;
+		ArrayList<Item> itemlist = null;
+		//the final order after all items have been added to the basket
+		Order order;
+		//the type of item selected
+		private String selectedType;
+		//the item chosen
+		private Item chosenItem;
+		//total cost of each item
+		private double totalAfterVat = 0;
+		//total cost for the order
+		private double totalCost = 0;
+		//displaying total cost
+		private double displayCost = 0;
 	
 	public ShoppingScreen(ArrayList<Item> itemList, Order shoppingBasket) {
 		//copy the elements of the original list to the declared list of items
 		itemlist = itemList;
 		//the order
 		order = shoppingBasket;
-		
+				
 		// create elements
 		JPanel panel = new JPanel();
 		JLabel comboLabel = new JLabel("What type of item would you like to buy?");
@@ -57,7 +59,7 @@ public class ShoppingScreen extends JFrame{
 		quantity.setColumns(10);
 		JButton calculate = new JButton("calculate");
 		JButton viewButton = new JButton("View Basket");
-		JButton totalCost = new JButton("Total Cost");
+		JButton completeCost = new JButton("Total Cost");
 		JLabel showVat = new JLabel();
 		JLabel showPrice = new JLabel();
 		JLabel showTotal = new JLabel();
@@ -71,8 +73,10 @@ public class ShoppingScreen extends JFrame{
 		//for scroll pane
 		bottomScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		bottomScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		
 		//arrayList of the shopping basket in which the added items are kept
 		ArrayList<ShoppingBasket> itemsInBasket = new ArrayList<ShoppingBasket>();
+		
 		//use the MigLayout manager
 		panel.setLayout(new MigLayout());
 		
@@ -129,73 +133,74 @@ public class ShoppingScreen extends JFrame{
 		});
 		
 		//actionListener for the calculate button - after a user has entered a quantity number
-		calculate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//variables for the VAT
-				double price = 0;
-				double rate = 0;
-				double vatAmount = 0;
-				double totalAfterVat = 0;
-				boolean found = false;
+				calculate.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//variables for the VAT
+						double price = 0;
+						double rate = 0;
+						double vatAmount = 0;
+						boolean found = false;
+						
+						//if there is no item selected display message
+						if(selectedItemCombo.getItemCount() == 0) {
+							vatRate.setText("");
+							JOptionPane.showMessageDialog(null, "No item chosen", "Alert", JOptionPane.WARNING_MESSAGE);
+						}
+						else if(quantity.getText().equals("")) {
+							//if there is no quantity entered display message
+							JOptionPane.showMessageDialog(null, "No quantity has been entered", "Alert", JOptionPane.WARNING_MESSAGE);
+						}
+						else {
+							//if there is an item selected and a quantity entered
+							//for each item in the list of items
+							for(Item item : itemlist) {
+								//if the item matches the item displayed in the combo box
+								if(item.displayInCombo().equals(selectedItemCombo.getSelectedItem())) {
+									//if the quantity entered is more than the number in stock
+									if(Integer.parseInt(quantity.getText()) > item.getItemQuantity()) {
+										//display message that there isnt enough in stock
+										JOptionPane.showMessageDialog(null, "We dont have that many items in stock", "Alert", JOptionPane.WARNING_MESSAGE);
+									}
+									else {
+										//otherwise set the chosen item equal to the item the loop is on
+										chosenItem = item;
+										found = true;
+									}
+								}
+							}
+							
+							//if everything above is a success assign appropriate values for each type
+							if(found == true) {
+								if(selectedType.equals("Luxury")) {
+									//if the selected type is luxury assign appropriate values
+									rate = 20;
+									price = 50 * Integer.parseInt(quantity.getText());
+								}
+								else if(selectedType.equals("Essential")) {
+									//if the selected type is essential assign appropriate value
+									rate = 10;
+									price = 30 * Integer.parseInt(quantity.getText());
+								}
+								else if(selectedType.equals("Gift")) {
+									//if the selected type is gift assign appropriate values
+									rate = 5;
+									price = 20 * Integer.parseInt(quantity.getText());
+								}
+								
+								//calculate the VAT
+								vatAmount = rate * (price / 100);
+								totalAfterVat = price + vatAmount;
+								
+								//display the VAT
+								showPrice.setText("Price for this item (without VAT): €" + price);
+								showVat.setText("VAT(" + rate + "%): €" + vatAmount);
+								showTotal.setText("Total (with VAT): €" + totalAfterVat);
+							}
+						}
+					}
+				});
 				
-				//if there is no item selected display message
-				if(selectedItemCombo.getItemCount() == 0) {
-					vatRate.setText("");
-					JOptionPane.showMessageDialog(null, "No item chosen", "Alert", JOptionPane.WARNING_MESSAGE);
-				}
-				else if(quantity.getText().equals("")) {
-					//if there is no quantity entered display message
-					JOptionPane.showMessageDialog(null, "No quantity has been entered", "Alert", JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					//if there is an item selected and a quantity entered
-					//for each item in the list of items
-					for(Item item : itemlist) {
-						//if the item matches the item displayed in the combo box
-						if(item.displayInCombo().equals(selectedItemCombo.getSelectedItem())) {
-							//if the quantity entered is more than the number in stock
-							if(Integer.parseInt(quantity.getText()) > item.getItemQuantity()) {
-								//display message that there isnt enough in stock
-								JOptionPane.showMessageDialog(null, "We dont have that many items in stock", "Alert", JOptionPane.WARNING_MESSAGE);
-							}
-							else {
-								//otherwise set the chosen item equal to the item the loop is on
-								chosenItem = item;
-								found = true;
-							}
-						}
-					}
-					
-					//if everything above is a success assign appropriate values for each type
-					if(found == true) {
-						if(selectedType.equals("Luxury")) {
-							//if the selected type is luxury assign appropriate values
-							rate = 20;
-							price = 50 * Integer.parseInt(quantity.getText());
-						}
-						else if(selectedType.equals("Essential")) {
-							//if the selected type is essential assign appropriate value
-							rate = 10;
-							price = 30 * Integer.parseInt(quantity.getText());
-						}
-						else if(selectedType.equals("Gift")) {
-							//if the selected type is gift assign appropriate values
-							rate = 5;
-							price = 20 * Integer.parseInt(quantity.getText());
-						}
-						
-						//calculate the VAT
-						vatAmount = rate * (price / 100);
-						totalAfterVat = price + vatAmount;
-						
-						//display the VAT
-						showPrice.setText("Price for this item (without VAT): â‚¬" + price);
-						showVat.setText("VAT(" + rate + "%): â‚¬" + vatAmount);
-						showTotal.setText("Total (with VAT): â‚¬" + totalAfterVat);
-					}
-				}
-			}
-		});
+				//
 		
 		//actionListener for the adding to basket button
 		addToBasket.addActionListener(new ActionListener() {
@@ -225,19 +230,24 @@ public class ShoppingScreen extends JFrame{
 		
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				for (ShoppingBasket order : itemsInBasket) {
+					itemArea.append(order + "\n");
+				}
+//				itemsInBasket.remove(order);
 		}
 			
 		});
 		
-		totalCost.addActionListener(new ActionListener() {
+		completeCost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double totalCost = 0;
-								
-				
+				for (ShoppingBasket order : itemsInBasket) {
+					 displayCost += order.getCost();
+				}
+				JOptionPane.showMessageDialog(null, "Total : " + displayCost, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
 		}
 			
 		});
+		
 		//actionListener for the back to menu button
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -264,10 +274,9 @@ public class ShoppingScreen extends JFrame{
 		panel.add(showTotal, "wrap");
 		panel.add(addToBasket, "split 2");
 		panel.add(viewButton, "split 2");
-		panel.add(totalCost, "split 2");
+		panel.add(completeCost, "split 2");
 		panel.add(backToMenu, "wrap");
 		panel.add(bottomScrollPane, "span");
-		panel.add(backToMenu);
 		add(panel);
 		
 		// set frame properties

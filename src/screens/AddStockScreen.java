@@ -8,11 +8,14 @@ import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
 import objects.Item;
+import objects.ShoppingBasket;
 
 
 public class AddStockScreen extends JFrame {
 	ArrayList<Item> list = null;
 	Item aItem;
+
+	
 	public AddStockScreen(ArrayList<Item> itemList) {
 		list = itemList;
 		//adding components
@@ -47,21 +50,25 @@ public class AddStockScreen extends JFrame {
 				String type = comboItem.getSelectedItem().toString();
 				
 				aItem = new Item(name, type, quantity);
-				
-				itemList.add(aItem);	
+				itemList.add(aItem);				
 			}
 		});
 		
+		//displays the items added in the textarea
 		viewButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e) {	
+			public void actionPerformed(ActionEvent e) {				
 				for (Item aItem : itemList) {
+//					bottomArea.setText("");
 					bottomArea.append(aItem + "\n");
 				}
+//				itemList.remove(aItem);
+//				String existingItems = bottomArea.getText();
+//				bottomArea.setText(existingItems + "\n" + aItem.toString());
 			}
 			
 		});
-		
+	
 		bottomArea.setEditable(false);
 		
 		panel.setLayout(new MigLayout());
@@ -83,9 +90,5 @@ public class AddStockScreen extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 	}
-	
-	
-	
-	
-	
+		
 }
