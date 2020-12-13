@@ -45,7 +45,7 @@ public class HomeScreen extends JFrame{
 		// displays the stock window
 		stockButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AddItemScreen(itemList);
+				new AddStockScreen(itemList);
 			}
 		});
 		
@@ -61,15 +61,11 @@ public class HomeScreen extends JFrame{
 			}
 		});
 		
-		/*
 		shoppingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new ShoppingScreen(itemList, shoppingBasket);
 			}
 		});
-		*/
-		
-		
 		
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
