@@ -90,18 +90,17 @@ public class UpdateStockScreen extends JFrame {
 				
 				//I want to add the quantity entered plus the old quantity
 				//for now I will just add the new quantity and come back to it
-				tempItem.setItemQuantity(Integer.parseInt(updatedQuantityField.getText()));
+				//tempItem.setItemQuantity(Integer.parseInt(updatedQuantityField.getText()));
 				
 				//updated quantity
-				//int updatedQuantity = tempItem.getItemQuantity() + itemList.get(position).getItemQuantity();
-				//tempItem.setItemQuantity(updatedQuantity);
-				
+				int updatedQuantity = Integer.parseInt(updatedQuantityField.getText()) + itemList.get(position).getItemQuantity();
+				tempItem.setItemQuantity(updatedQuantity);
 				
 				//I will replace the item in the arraylist with the item with the updated stock
 				itemList.set(position, tempItem);
 				
 				//set updated quantity
-				origQuantityField.setText(Integer.toString(tempItem.getItemQuantity()));
+				origQuantityField.setText(Integer.toString(updatedQuantity));
 				origQuantityField.setEditable(false);
 				origQuantityField.setSelectedTextColor(Color.GRAY);
 			}
@@ -136,6 +135,7 @@ public class UpdateStockScreen extends JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
 		
 	}
 		

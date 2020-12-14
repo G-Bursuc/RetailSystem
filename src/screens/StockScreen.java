@@ -31,12 +31,18 @@ public class StockScreen extends JFrame{
 			}
 		});
 		
+		deleteStockBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new DeleteStockScreen(itemList);
+			}
+		});
 		
 		
 		// add elements to the panel and add panel to the JFrame
 		add(panel);
 		panel.add(addStockBtn);
 		panel.add(updateStockBtn);
+		panel.add(deleteStockBtn);
 		
 		// set frame properties
 		setTitle("Stock Screen");
@@ -44,5 +50,6 @@ public class StockScreen extends JFrame{
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		pack();
 	}
 }
