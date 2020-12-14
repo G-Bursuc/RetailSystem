@@ -1,3 +1,9 @@
+/*
+ * Class Name: InputBox.java
+ * Class Description: Lets the user input the item and quantity to be packed into boxes.
+ * Created By: Tami Adeduntan (C18327556)
+ */
+
 package screens;
 
 import java.awt.event.ActionEvent;

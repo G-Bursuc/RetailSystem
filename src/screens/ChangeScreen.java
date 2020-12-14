@@ -1,3 +1,10 @@
+/*
+ * Class Name: ChangeScreen.java
+ * Class Description: This screen shows the change screen calculator that lets the user input the amount to pay and the payment a customer has made.
+ * If a shopping basket has been made, the total cost from it will be automatically input for the user.
+ * Created By: George Bursuc (C18399946)
+ */
+
 package screens;
 
 import java.awt.event.ActionEvent;
@@ -15,7 +22,7 @@ import objects.Order;
 
 public class ChangeScreen extends JFrame{
 	Order basket = null;
-	JTextField amountField = null;
+	JTextField amountField = new JTextField(20);
 
 	public ChangeScreen(Order shoppingBasket) {
 		basket = shoppingBasket;
@@ -31,10 +38,8 @@ public class ChangeScreen extends JFrame{
 		JButton clear = new JButton("clear");
 
 		// check if an order item (shopping basket) exists in the system yet
-		if (basket == null) // if empty, then leave amountField empty
-			amountField = new JTextField("", 20);
-		else { // if an order exists then fill in the order total into amountField
-			amountField = new JTextField(Double.toString(basket.getCost()));
+		if (basket != null && basket.getCost() > 0.0) { // if an order exists then fill in the order total into amountField
+			amountField.setText(Double.toString(basket.getCost()));
 			emptyBasket = false;
 		}
 

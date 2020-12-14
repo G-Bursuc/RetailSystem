@@ -1,3 +1,10 @@
+/*
+ * Class Name: StockScreen.java
+ * Class Description: This class hosts the buttons to manage stock items, such as adding and viewing stock items, 
+ * updating a stock item and deleting a stock item.
+ * Created By: Joshua Chukwuezi (C18709101)
+ */
+
 package screens;
 
 import java.awt.event.ActionEvent;

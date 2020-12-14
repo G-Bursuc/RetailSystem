@@ -1,3 +1,10 @@
+/*
+ * Class Name: ShoppingScreen.java
+ * Class Description: This screen lets the user choose an item category, select an item to purchase, view the VAT to be applied, add the item
+ * to the shopping basket and view the total cost of the shopping basket.
+ * Created By: Iuliana Attl (C18379476) & Tami Adeduntan (C18327556)
+ */
+
 package screens;
 
 import java.awt.event.ActionEvent;
@@ -49,10 +56,10 @@ public class ShoppingScreen extends JFrame{
 		itemCombo.addItem("Luxury");
 		itemCombo.addItem("Essential");
 		itemCombo.addItem("Gift");
-		JButton okButton = new JButton("ok");
+		JButton okButton = new JButton("Select");
 		JLabel itemComboLabel = new JLabel("Select the item you want to buy:");
 		JComboBox selectedItemCombo = new JComboBox();
-		JButton okButton2 = new JButton("ok");
+		JButton okButton2 = new JButton("Check VAT rate");
 		JLabel vatRate = new JLabel();
 		JLabel quantityLabel = new JLabel("How many?");
 		JTextField quantity = new JTextField();
@@ -280,6 +287,7 @@ public class ShoppingScreen extends JFrame{
 		//actionListener for the calculating the basket button
 		completeCost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				displayCost = 0;
 				for (ShoppingBasket order : itemsInBasket) {
 					displayCost += order.getCost();
 				}

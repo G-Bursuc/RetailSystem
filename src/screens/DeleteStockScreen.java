@@ -1,3 +1,9 @@
+/*
+ * Class Name: DeleteStockScreen.java
+ * Class Description: This screen allows the user to delete a certain stock item from the system.
+ * Created By: Joshua Chukwuezi (C18709101)
+ */
+
 package screens;
 
 import java.awt.Color;

@@ -1,12 +1,18 @@
+/*
+ * Class Name: Box.java
+ * Class Description: This class creates a box item that stores the box dimensions and weight limit.
+ * Created By: Tami Adeduntan (C18327556)
+ */
+
 package objects;
 
 public class Box {
-		
+
 	int length;
 	int width;
 	int height;
 	int weight;
-	
+
 	public Box(int length, int width, int height, int weight) {
 		this.length = length;
 		this.width = width;
@@ -45,5 +51,5 @@ public class Box {
 	public void setWeight(int weight) {
 		this.weight = weight;
 	}
-	
+
 }

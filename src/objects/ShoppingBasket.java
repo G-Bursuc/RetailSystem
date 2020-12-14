@@ -3,6 +3,7 @@
  * Class Description: This class creates a shopping basket item with information such as the item chosen, quantity chosen and total cost after VAT.
  * Created By: Iuliana Attl (C18379476) 
  */
+
 package objects;
 
 public class ShoppingBasket {
@@ -10,7 +11,7 @@ public class ShoppingBasket {
 	private Item item;
 	private int quantity;
 	private double cost;
-	
+
 	//constructor
 	public ShoppingBasket(Item item, int quantity, double cost) {
 		this.item = item;
@@ -42,7 +43,7 @@ public class ShoppingBasket {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-	
+
 	//display method for the items in the shopping basket
 	public String toString() {
 		return "\n" + this.item + "\nQuantity :" + this.quantity + "\nCost: " + this.cost;

@@ -1,3 +1,9 @@
+/*
+ * Class Name: UpdateStockScreen.java
+ * Class Description: This screen lets the user update the quantity of a stock item in the system.
+ * Created By: Joshua Chukwuezi (C18709101)
+ */
+
 package screens;
 
 import java.awt.Color;

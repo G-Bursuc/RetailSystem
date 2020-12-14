@@ -1,3 +1,9 @@
+/*
+ * Class Name: InputBox.java
+ * Class Description: Lets the user input the dimensions and weight limit of a box.
+ * Created By: Tami Adeduntan (C18327556)
+ */
+
 package screens;
 
 import java.awt.event.ActionEvent;
