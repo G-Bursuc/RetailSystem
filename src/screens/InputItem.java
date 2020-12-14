@@ -44,8 +44,10 @@ public class InputItem extends JFrame{
 				boolean itemFound = false;
 					public void actionPerformed(ActionEvent e) {
 						// checks if itemID exists
+						Item tempItem = null;
 						for (Item item: iList)	{
 							if(item.getItemID() == Integer.parseInt(itemID.getText())) {
+								tempItem = item;
 								itemFound = true;
 							}
 						}
@@ -58,15 +60,14 @@ public class InputItem extends JFrame{
 						{
 							int itemQuantity = Integer.parseInt(quantity.getText());
 							// checks item quanity and quantity entered
-							for (Item item : iList) {
-								if (itemQuantity > item.getItemQuantity()) {
+								if (itemQuantity > tempItem.getItemQuantity()) {
 									JOptionPane.showMessageDialog(null, "There are not enough items in stock", "Alert", JOptionPane.WARNING_MESSAGE);
 								}
 								
 								else {
 									JOptionPane.showMessageDialog(null, "Item can be packed into box", "Information", JOptionPane.INFORMATION_MESSAGE);
 								}
-							}
+						
 							
 						}
 				}
