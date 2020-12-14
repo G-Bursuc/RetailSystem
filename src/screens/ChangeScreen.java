@@ -25,8 +25,8 @@ public class ChangeScreen extends JFrame{
 
 		// create elements
 		JPanel panel = new JPanel();
-		JLabel amountLabel= new JLabel("Amount Due in Basket in €: (blank if no basket has been made)");
-		JLabel paymentLabel= new JLabel("Amount Paid in €: ");
+		JLabel amountLabel= new JLabel("Amount Due in Basket in â‚¬: (blank if no basket has been made)");
+		JLabel paymentLabel= new JLabel("Amount Paid in â‚¬: ");
 		JTextField paymentField = new JTextField(20);
 		JButton calculateBttn = new JButton("Calculate Change");
 		JButton exitBttn = new JButton("Exit");
@@ -116,7 +116,7 @@ public class ChangeScreen extends JFrame{
 			if (changeDue >= currentChange) {
 				// check if the change can be represented with a euro sign or cent sign and add to the change due list
 				if (currentChange >= 100) // the current change is more than or equal to one euro
-					changeDueList += ("€" + String.valueOf(currentChange/100) + ": ");
+					changeDueList += ("â‚¬" + String.valueOf(currentChange/100) + ": ");
 				else 
 					changeDueList += (String.valueOf(currentChange) + "c: ");
 
@@ -136,8 +136,5 @@ public class ChangeScreen extends JFrame{
 		else
 			return changeDueList;
 	}
-
-	public static void main(String[] args) {
-		new ChangeScreen(null);
-	}
+	
 }
