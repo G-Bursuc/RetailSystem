@@ -133,18 +133,48 @@ public class ShoppingScreen extends JFrame{
 		});
 		
 		//actionListener for the calculate button - after a user has entered a quantity number
-				calculate.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						//variables for the VAT
-						double price = 0;
-						double rate = 0;
-						double vatAmount = 0;
-						boolean found = false;
-						
-						//if there is no item selected display message
-						if(selectedItemCombo.getItemCount() == 0) {
-							vatRate.setText("");
-							JOptionPane.showMessageDialog(null, "No item chosen", "Alert", JOptionPane.WARNING_MESSAGE);
+		calculate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//variables for the VAT
+				double price = 0;
+				double rate = 0;
+				double vatAmount = 0;
+				boolean found = false;
+				
+				//if there is no item selected display message
+				if(selectedItemCombo.getItemCount() == 0) {
+					vatRate.setText("");
+					JOptionPane.showMessageDialog(null, "No item chosen", "Alert", JOptionPane.WARNING_MESSAGE);
+				}
+				else if(quantity.getText().equals("")) {
+					//if there is no quantity entered display message
+					JOptionPane.showMessageDialog(null, "No quantity has been entered", "Alert", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					//if there is an item selected and a quantity entered
+					//for each item in the list of items
+					for(Item item : itemlist) {
+						//if the item matches the item displayed in the combo box
+						if(item.displayInCombo().equals(selectedItemCombo.getSelectedItem())) {
+							//if the quantity entered is more than the number in stock
+							if(Integer.parseInt(quantity.getText()) > item.getItemQuantity()) {
+								//display message that there isnt enough in stock
+								JOptionPane.showMessageDialog(null, "We dont have that many items in stock", "Alert", JOptionPane.WARNING_MESSAGE);
+							}
+							else {
+								//otherwise set the chosen item equal to the item the loop is on
+								chosenItem = item;
+								found = true;
+							}
+						}
+					}
+					
+					//if everything above is a success assign appropriate values for each type
+					if(found == true) {
+						if(selectedType.equals("Luxury")) {
+							//if the selected type is luxury assign appropriate values
+							rate = 20;
+							price = 50 * Integer.parseInt(quantity.getText());
 						}
 						else if(quantity.getText().equals("")) {
 							//if there is no quantity entered display message
@@ -192,11 +222,20 @@ public class ShoppingScreen extends JFrame{
 								totalAfterVat = price + vatAmount;
 								
 								//display the VAT
-								showPrice.setText("Price for this item (without VAT): �" + price);
-								showVat.setText("VAT(" + rate + "%): �" + vatAmount);
-								showTotal.setText("Total (with VAT): �" + totalAfterVat);
+								showPrice.setText("Price for this item (without VAT): €" + price);
+								showVat.setText("VAT(" + rate + "%): €" + vatAmount);
+								showTotal.setText("Total (with VAT): €" + totalAfterVat);
 							}
 						}
+						
+						//calculate the VAT
+						vatAmount = rate * (price / 100);
+						totalAfterVat = price + vatAmount;
+						
+						//display the VAT
+						showPrice.setText("Price for this item (without VAT): €" + price);
+						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
+						showTotal.setText("Total (with VAT): €" + totalAfterVat);
 					}
 				});
 				
@@ -216,8 +255,6 @@ public class ShoppingScreen extends JFrame{
 						item.setItemQuantity(item.getItemQuantity() - Integer.parseInt(quantity.getText()));
 						}
 				}
-				//create the order with the items in the basket
-				order = new Order(itemsInBasket, totalCost);
 				//clear all fields so the user can buy more items if they want
 				selectedItemCombo.removeAllItems();
 				quantity.setText("");
@@ -246,6 +283,10 @@ public class ShoppingScreen extends JFrame{
 					 displayCost += order.getCost();
 				}
 				JOptionPane.showMessageDialog(null, "Total : " + displayCost, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
+				double totalCost = 0;
+								 
+				//create the order with the items in the basket and total cost
+				order = new Order(itemsInBasket, totalCost);
 		}
 			
 		});

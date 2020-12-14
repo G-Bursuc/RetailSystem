@@ -2,6 +2,7 @@ package screens;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -17,7 +18,6 @@ import objects.Order;
 public class ChangeScreen extends JFrame{
 	Order basket = null;
 	JTextField amountField = null;
-	HashMap<Double, Integer> coinage = new HashMap<Double, Integer>();
 
 	public ChangeScreen(Order shoppingBasket) {
 		basket = shoppingBasket;
@@ -25,18 +25,18 @@ public class ChangeScreen extends JFrame{
 
 		// create elements
 		JPanel panel = new JPanel();
-		JLabel amountLabel= new JLabel("Amount Due in Basket in €: (blank if no basket has been made)");
-		JLabel paymentLabel= new JLabel("Amount Paid in €: ");
+		JLabel amountLabel= new JLabel("Amount Due in Basket in â‚¬: (blank if no basket has been made)");
+		JLabel paymentLabel= new JLabel("Amount Paid in â‚¬: ");
 		JTextField paymentField = new JTextField(20);
 		JButton calculateBttn = new JButton("Calculate Change");
 		JButton exitBttn = new JButton("Exit");
+		JButton clear = new JButton("clear");
 
 		// check if an order item (shopping basket) exists in the system yet
 		if (basket == null) // if empty, then leave amountField empty
 			amountField = new JTextField("", 20);
 		else { // if an order exists then fill in the order total into amountField
-			amountField = new JTextField("30", 20);
-			//amountField = new JTextField(basket.getTotal());
+			amountField = new JTextField(Double.toString(basket.getCost()));
 			emptyBasket = false;
 		}
 
@@ -47,16 +47,24 @@ public class ChangeScreen extends JFrame{
 				double amount = Double.parseDouble(amountField.getText());
 				double payment = Double.parseDouble(paymentField.getText());
 				// make sure the payment is enough to pay for the amount due
-				if (payment > amount) {
+				if (payment >= amount) {
 					String amountDue;
-					amountDue = calculate(amount, payment);
-					JOptionPane.showMessageDialog(null, "Change Due: " + amountDue, "Information", JOptionPane.WARNING_MESSAGE);
+					amountDue = calculateChange(amount, payment);
+					JOptionPane.showMessageDialog(null, "Change Due: " + amountDue, "Information", JOptionPane.INFORMATION_MESSAGE);
 				}
 				else
-					JOptionPane.showMessageDialog(null, "Error - Payment didn't exceed the amount due.", "Information", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Error - Payment cannot cover the amount due.", "Warning", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 
+		// button that clears the calculator fields
+		clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				amountField.setText("");
+				paymentField.setText("");
+			}
+		});
+				
 		// button that closes the change calculator window
 		exitBttn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,7 +78,8 @@ public class ChangeScreen extends JFrame{
 		panel.add(amountField, "wrap");
 		panel.add(paymentLabel, "wrap");
 		panel.add(paymentField, "wrap");
-		panel.add(calculateBttn, "wrap");
+		panel.add(calculateBttn, "split 2");
+		panel.add(clear, "wrap");
 		panel.add(exitBttn);
 		add(panel);
 
@@ -87,38 +96,55 @@ public class ChangeScreen extends JFrame{
 					+ "from it has been automatically filled into the calculator.", "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	public String calculate(double amountDue, double payment) {
-		// setup array of all notes and coins for change
-		Double[] notesAndChange = {500.0, 100.0, 50.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01};
-		double paymentDue = 0;
+	public String calculateChange(double amountDueDoub, double paymentDoub) {
+		// convert payment due and payment to cents to avoid double/floating point errors
+		int amountDue = (int) (amountDueDoub * 100);
+		int payment = (int) (paymentDoub * 100);
 		
-		// create a hashmap to store how many of each note/coin to give back
-		coinage.put(notesAndChange[0], 0);
-		coinage.put(notesAndChange[1], 0);
-		coinage.put(notesAndChange[2], 0);
-		coinage.put(notesAndChange[3], 0);
-		coinage.put(notesAndChange[4], 0);
-		coinage.put(notesAndChange[5], 0);
-		coinage.put(notesAndChange[6], 0);
-		coinage.put(notesAndChange[7], 0);
-		coinage.put(notesAndChange[8], 0);
-		coinage.put(notesAndChange[9], 0);
-		coinage.put(notesAndChange[10], 0);
-		coinage.put(notesAndChange[11], 0);
-		coinage.put(notesAndChange[12], 0);
+		// find how much the customer is owed
+		int changeDue = payment - amountDue;
+
+		// setup array of all notes and coins for change in cents
+		Integer[] changeList = {50000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1};
+
+		// store the list of change needed to give back customer
+		String changeDueList = "\n";
+
+		// keep track of the change currently being compared to the change due and the count of how many of that change to give
+		int currentChange;
+		int currentChangeCount;
 
 		// going through each type of change starting at 500 euro note
-		for (int x = 0; x < notesAndChange.length; x++) {
+		for (int x = 0; x < changeList.length; x++) {
+			// to avoid repeatedly accessing array for the current change being compared
+			currentChange = changeList[x];
+
+			// reset count value for every iteration
+			currentChangeCount = 0;
+
 			// check if a note/coin can be taken away from the amount due
-			if (amountDue >= notesAndChange[x]) {
-				// keep taking away value of change selected and increment in hashmap
-				while(amountDue >= notesAndChange[x]) {
-					amountDue -= notesAndChange[x];
-					coinage.put(notesAndChange[x], coinage.get(notesAndChange[x]) + 1);
+			if (changeDue >= currentChange) {
+				// check if the change can be represented with a euro sign or cent sign and add to the change due list
+				if (currentChange >= 100) // the current change is more than or equal to one euro
+					changeDueList += ("â‚¬" + String.valueOf(currentChange/100) + ": ");
+				else 
+					changeDueList += (String.valueOf(currentChange) + "c: ");
+
+				// keep taking away value of change selected and increment the count of how many of that change is needed
+				while(changeDue >= currentChange) {
+					changeDue -= currentChange;
+					currentChangeCount++;
 				}
+
+				// add the count to the change due list
+				changeDueList += String.valueOf(currentChangeCount) + "\n";
 			}
 		}
 		
-		return null;
+		if (changeDueList.equals("\n"))
+			return "No change is needed";
+		else
+			return changeDueList;
 	}
+	
 }
