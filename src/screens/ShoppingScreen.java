@@ -36,11 +36,11 @@ public class ShoppingScreen extends JFrame{
 	//displaying total cost
 	private double displayCost = 0;
 
-	public ShoppingScreen(ArrayList<Item> itemList, Order shoppingBasket) {
+	public ShoppingScreen(ArrayList<Item> itemList, Order ord) {
 		//copy the elements of the original list to the declared list of items
-		itemlist = itemList;
-		//the order
-		order = shoppingBasket;
+		this.itemlist = itemList;
+		
+		this.order = ord;
 
 		// create elements
 		JPanel panel = new JPanel();
@@ -222,9 +222,9 @@ public class ShoppingScreen extends JFrame{
 								totalAfterVat = price + vatAmount;
 
 								//display the VAT
-								showPrice.setText("Price for this item (without VAT): €" + price);
-								showVat.setText("VAT(" + rate + "%): €" + vatAmount);
-								showTotal.setText("Total (with VAT): €" + totalAfterVat);
+								showPrice.setText("Price for this item (without VAT): \u20AC" + price);
+								showVat.setText("VAT(" + rate + "%): \u20AC" + vatAmount);
+								showTotal.setText("Total (with VAT): \u20AC" + totalAfterVat);
 							}
 						}
 
@@ -233,9 +233,9 @@ public class ShoppingScreen extends JFrame{
 						totalAfterVat = price + vatAmount;
 
 						//display the VAT
-						showPrice.setText("Price for this item (without VAT): €" + price);
-						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
-						showTotal.setText("Total (with VAT): €" + totalAfterVat);
+						showPrice.setText("Price for this item (without VAT): \u20AC" + price);
+						showVat.setText("VAT(" + rate + "%): \u20AC" + vatAmount);
+						showTotal.setText("Total (with VAT): \u20AC" + totalAfterVat);
 					}
 				}
 			}});
@@ -269,6 +269,7 @@ public class ShoppingScreen extends JFrame{
 		//actionListener for the viewing the basket button
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				itemArea.setText("");
 				for (ShoppingBasket order : itemsInBasket) {
 					itemArea.append(order + "\n");
 				}
@@ -286,7 +287,8 @@ public class ShoppingScreen extends JFrame{
 				double totalCost = 0;
 
 				//create the order with the items in the basket and total cost
-				order = new Order(itemsInBasket, totalCost);
+				order = new Order(itemsInBasket, displayCost);
+				System.out.println(order);
 			}
 
 		});
@@ -327,6 +329,6 @@ public class ShoppingScreen extends JFrame{
 		setSize(580, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 }

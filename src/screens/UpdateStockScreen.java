@@ -134,7 +134,7 @@ public class UpdateStockScreen extends JFrame {
 		setSize(500, 200);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		
 	}

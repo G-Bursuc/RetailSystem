@@ -23,8 +23,8 @@ public class ChangeScreen extends JFrame{
 
 		// create elements
 		JPanel panel = new JPanel();
-		JLabel amountLabel= new JLabel("Amount Due in Basket in €: (blank if no basket has been made)");
-		JLabel paymentLabel= new JLabel("Amount Paid in €: ");
+		JLabel amountLabel= new JLabel("Amount Due in Basket in \u20AC: (blank if no basket has been made)");
+		JLabel paymentLabel= new JLabel("Amount Paid in \u20AC: ");
 		JTextField paymentField = new JTextField(20);
 		JButton calculateBttn = new JButton("Calculate Change");
 		JButton exitBttn = new JButton("Exit");
@@ -86,7 +86,7 @@ public class ChangeScreen extends JFrame{
 		setSize(450, 400);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		// show pop up window to inform user that the amount field has taken the total value from the shopping basket
 		if (!emptyBasket)
@@ -124,7 +124,7 @@ public class ChangeScreen extends JFrame{
 			if (changeDue >= currentChange) {
 				// check if the change can be represented with a euro sign or cent sign and add to the change due list
 				if (currentChange >= 100) // the current change is more than or equal to one euro
-					changeDueList += ("€" + String.valueOf(currentChange/100) + ": ");
+					changeDueList += ("\u20AC" + String.valueOf(currentChange/100) + ": ");
 				else 
 					changeDueList += (String.valueOf(currentChange) + "c: ");
 

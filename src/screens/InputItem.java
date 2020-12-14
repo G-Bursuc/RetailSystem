@@ -87,6 +87,6 @@ public class InputItem extends JFrame{
 		setSize(580, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 }

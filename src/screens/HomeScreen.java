@@ -45,7 +45,7 @@ public class HomeScreen extends JFrame{
 		// displays the stock window
 		stockButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new AddStockScreen(itemList);
+				new StockScreen(itemList);
 			}
 		});
 		

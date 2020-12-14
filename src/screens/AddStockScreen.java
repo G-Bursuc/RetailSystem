@@ -56,14 +56,11 @@ public class AddStockScreen extends JFrame {
 		//displays the items added in the textarea
 		viewButton.addActionListener(new ActionListener()
 		{
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {
+				bottomArea.setText("");
 				for (Item aItem : itemList) {
-//					bottomArea.setText("");
 					bottomArea.append(aItem + "\n");
 				}
-//				itemList.remove(aItem);
-//				String existingItems = bottomArea.getText();
-//				bottomArea.setText(existingItems + "\n" + aItem.toString());
 			}
 			
 		});

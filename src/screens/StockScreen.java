@@ -12,7 +12,8 @@ import objects.Item;
 
 public class StockScreen extends JFrame{
 	ArrayList<Item> itemList = new ArrayList<Item>();
-	public StockScreen() {
+	public StockScreen(ArrayList<Item> list) {
+		itemList = list;
 		// create elements
 		JPanel panel = new JPanel();
 		JButton addStockBtn = new JButton("ADD STOCK");
@@ -49,7 +50,7 @@ public class StockScreen extends JFrame{
 		setSize(580, 600);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
 	}
 }

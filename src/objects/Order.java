@@ -37,12 +37,12 @@ public class Order {
 	
 	//method that displays the order
 	public String toString() {
-		return displayElements() + "\nCost: " + this.cost;
+		return displayElements() + "\nTotal Cost: " + this.cost;
 	}
 	
 	//method that displays the items in the basket
 	public String displayElements() {
-		String display = null;
+		String display = "";
 		for(ShoppingBasket bas : basket) {
 			display = display + bas.toString();
 		}
