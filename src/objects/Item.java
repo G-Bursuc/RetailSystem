@@ -7,10 +7,7 @@ public class Item {
 	private int itemQuantity;
 	private int itemID;
 	private static int uniqueID = 1;
-	
-	public Item() {
-		
-	}
+	private Item tempItem;
 	
 	public Item(String name, String type, int quantity) {
 		this.itemName = name;
@@ -19,6 +16,10 @@ public class Item {
 		this.itemID = createID();
 	}
 	
+	public Item() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public static int createID() {
 		return uniqueID++;
 	}
@@ -56,7 +57,14 @@ public class Item {
 		this.itemID = itemID;
 	}
 	
-	
+	public Item getTempItem() {
+		return tempItem;
+	}
+
+	public void setTempItem(Item tempItem) {
+		this.tempItem = tempItem;
+	}
+
 	public String toString() {
 		return
 				"\nItem ID: " + this.itemID
