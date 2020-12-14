@@ -1,7 +1,7 @@
 /*
  * Class Name: AddStockScreen.java
  * Class Description: This class lets the user add a stock item to the system and view stock items currently in the system.
- * Created By: Joshua Chukwuezi (C18709101)
+ * Created By: Joshua Chukwuezi (C18709101) & Tami Adeduntan (C18327556)
  */
 
 package screens;
@@ -14,7 +14,6 @@ import javax.swing.*;
 
 import net.miginfocom.swing.MigLayout;
 import objects.Item;
-import objects.ShoppingBasket;
 
 
 public class AddStockScreen extends JFrame {
@@ -48,7 +47,6 @@ public class AddStockScreen extends JFrame {
 		bottomScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		submitBtn.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				String name = itemNameField.getText();
 				int quantity =  Integer.parseInt(itemQuantityField.getText());
@@ -90,7 +88,6 @@ public class AddStockScreen extends JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
 	}
 
 }

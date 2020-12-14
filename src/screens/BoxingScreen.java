@@ -6,12 +6,14 @@
 
 package screens;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
@@ -29,6 +31,12 @@ public class BoxingScreen extends JFrame{
 		JButton enterBox = new JButton("Enter Box");
 		JButton enterItem = new JButton("Enter Item");
 
+		// setting title and font
+		JLabel title;
+		title = new JLabel("Item Packer"); 
+		Font rstitle = new Font("Arial", Font.PLAIN, 30);
+		title.setFont(rstitle);
+		
 		//action listener for when the total button is clicked
 		enterBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -42,13 +50,17 @@ public class BoxingScreen extends JFrame{
 			}
 		});
 
+		panel.setLayout(new MigLayout("", "20", "20"));
+		panel.add(title, "span 2, align center, wrap");
 		panel.add(enterBox);
 		panel.add(enterItem);
 		add(panel);
+		
 		setTitle("Boxing Screen");
 		setSize(280, 300);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		pack();
 	}
 }

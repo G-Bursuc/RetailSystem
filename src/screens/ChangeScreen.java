@@ -7,6 +7,7 @@
 
 package screens;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -36,6 +37,12 @@ public class ChangeScreen extends JFrame{
 		JButton calculateBttn = new JButton("Calculate Change");
 		JButton exitBttn = new JButton("Exit");
 		JButton clear = new JButton("clear");
+		
+		// setting title and font
+		JLabel title;
+		title = new JLabel("Change Calculator"); 
+		Font rstitle = new Font("Arial", Font.PLAIN, 30);
+		title.setFont(rstitle);
 
 		// check if an order item (shopping basket) exists in the system yet
 		if (basket != null && basket.getCost() > 0.0) { // if an order exists then fill in the order total into amountField
@@ -76,7 +83,9 @@ public class ChangeScreen extends JFrame{
 		});
 
 		// add elements to the panel and add panel to the JFrame
-		panel.setLayout(new MigLayout("", "275!"));
+		//panel.setLayout(new MigLayout("", "275!"));
+		panel.setLayout(new MigLayout("", "20", "20"));
+		panel.add(title, "span 2, align center, wrap");
 		panel.add(amountLabel, "wrap");
 		panel.add(amountField, "wrap");
 		panel.add(paymentLabel, "wrap");
@@ -144,6 +153,7 @@ public class ChangeScreen extends JFrame{
 			}
 		}
 		
+		// if the list was never added to, then it means the customer has paid the exact amount and there is no change to give
 		if (changeDueList.equals("\n"))
 			return "No change is needed";
 		else

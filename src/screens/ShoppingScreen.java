@@ -7,6 +7,7 @@
 
 package screens;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -38,8 +39,6 @@ public class ShoppingScreen extends JFrame{
 	private Item chosenItem;
 	//total cost of each item
 	private double totalAfterVat = 0;
-	//total cost for the order
-	private double totalCost = 0;
 	//displaying total cost
 	private double displayCost = 0;
 
@@ -74,7 +73,13 @@ public class ShoppingScreen extends JFrame{
 		JButton backToMenu = new JButton("back to menu");
 		JTextArea itemArea = new JTextArea(20, 40);
 		JScrollPane bottomScrollPane = new JScrollPane(itemArea);
-
+		
+		// setting title and font
+		JLabel title;
+		title = new JLabel("Shopping Basket"); 
+		Font rstitle = new Font("Arial", Font.PLAIN, 30);
+		title.setFont(rstitle);
+		
 
 		//constraints
 		//for scroll pane
@@ -311,6 +316,7 @@ public class ShoppingScreen extends JFrame{
 		// add elements to the panel and add panel to the JFrame
 		itemArea.setEditable(false);
 
+		panel.add(title, "span 3, align center, wrap");
 		panel.add(comboLabel);
 		panel.add(itemCombo, "split 2");
 		panel.add(okButton, "wrap");

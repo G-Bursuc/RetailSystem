@@ -3,6 +3,7 @@
  * Class Description: This screen is the main home screen of the program and it allows the user to access various parts of the system such as:
  * viewing and managing stock items, creating a shopping basket using items within the system, calculating change needed for a purchase and
  * an item box packer that packs items into the least amount of boxes.
+ * Created By: Tami Adeduntan (C18327556)
  */
 
 package screens;
