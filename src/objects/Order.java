@@ -12,10 +12,15 @@ public class Order {
 	private ArrayList<ShoppingBasket> basket;
 	private double cost;
 	
-	//constructor
+	//constructors
 	public Order(ArrayList<ShoppingBasket> basket, double cost) {
 		this.basket = basket;
 		this.cost = cost;
+	}
+	
+	public Order() {
+		this.basket = null;
+		this.cost = 0;
 	}
 
 	//getters and setters

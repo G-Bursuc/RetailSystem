@@ -24,7 +24,7 @@ public class HomeScreen extends JFrame{
 	// array list to store the boxes
 	ArrayList<Box> boxList = new ArrayList<Box>();
 	// global order to store the last order from the shopping basket, to be used for change calculator
-	Order shoppingBasket = null;
+	Order shoppingBasket = new Order();
 	
 	public HomeScreen() {
 		// create elements 

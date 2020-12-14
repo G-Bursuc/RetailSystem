@@ -284,11 +284,10 @@ public class ShoppingScreen extends JFrame{
 					displayCost += order.getCost();
 				}
 				JOptionPane.showMessageDialog(null, "Total : " + displayCost, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
-				double totalCost = 0;
 
-				//create the order with the items in the basket and total cost
-				order = new Order(itemsInBasket, displayCost);
-				System.out.println(order);
+				//set the order basket and total cost equal to the values
+				order.setBasket(itemsInBasket);
+				order.setCost(displayCost);
 			}
 
 		});
