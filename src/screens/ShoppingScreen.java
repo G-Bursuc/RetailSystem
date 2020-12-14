@@ -20,28 +20,28 @@ import objects.Order;
 import objects.ShoppingBasket;
 
 public class ShoppingScreen extends JFrame{
-	
+
 	//arrayList that stores items
-		ArrayList<Item> itemlist = null;
-		//the final order after all items have been added to the basket
-		Order order;
-		//the type of item selected
-		private String selectedType;
-		//the item chosen
-		private Item chosenItem;
-		//total cost of each item
-		private double totalAfterVat = 0;
-		//total cost for the order
-		private double totalCost = 0;
-		//displaying total cost
-		private double displayCost = 0;
-	
+	ArrayList<Item> itemlist = null;
+	//the final order after all items have been added to the basket
+	Order order;
+	//the type of item selected
+	private String selectedType;
+	//the item chosen
+	private Item chosenItem;
+	//total cost of each item
+	private double totalAfterVat = 0;
+	//total cost for the order
+	private double totalCost = 0;
+	//displaying total cost
+	private double displayCost = 0;
+
 	public ShoppingScreen(ArrayList<Item> itemList, Order shoppingBasket) {
 		//copy the elements of the original list to the declared list of items
 		itemlist = itemList;
 		//the order
 		order = shoppingBasket;
-				
+
 		// create elements
 		JPanel panel = new JPanel();
 		JLabel comboLabel = new JLabel("What type of item would you like to buy?");
@@ -67,19 +67,19 @@ public class ShoppingScreen extends JFrame{
 		JButton backToMenu = new JButton("back to menu");
 		JTextArea itemArea = new JTextArea(20, 40);
 		JScrollPane bottomScrollPane = new JScrollPane(itemArea);
-		
-		
+
+
 		//constraints
 		//for scroll pane
 		bottomScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		bottomScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		
+
 		//arrayList of the shopping basket in which the added items are kept
 		ArrayList<ShoppingBasket> itemsInBasket = new ArrayList<ShoppingBasket>();
-		
+
 		//use the MigLayout manager
 		panel.setLayout(new MigLayout());
-		
+
 		//actionListener for the first ok button - after a user selects a type
 		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -88,7 +88,7 @@ public class ShoppingScreen extends JFrame{
 				//check what type they have selected
 				selectedType = (String) itemCombo.getSelectedItem();
 				boolean found = false;
-						
+
 				//for each item in the list of items
 				for(Item item : itemlist) {
 					//if the item type is the same as the one entered by the user and the stock is not empty
@@ -98,7 +98,7 @@ public class ShoppingScreen extends JFrame{
 						found = true;
 					}
 				}
-						
+
 				//if items of that type have not been found
 				if(found == false) {
 					//display message that there are no items of that type
@@ -107,7 +107,7 @@ public class ShoppingScreen extends JFrame{
 				}
 			}
 		});
-		
+
 		//actionListener for the second ok button - after a user selects the item
 		okButton2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +131,7 @@ public class ShoppingScreen extends JFrame{
 				}
 			}
 		});
-		
+
 		//actionListener for the calculate button - after a user has entered a quantity number
 		calculate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -140,7 +140,7 @@ public class ShoppingScreen extends JFrame{
 				double rate = 0;
 				double vatAmount = 0;
 				boolean found = false;
-				
+
 				//if there is no item selected display message
 				if(selectedItemCombo.getItemCount() == 0) {
 					vatRate.setText("");
@@ -168,7 +168,7 @@ public class ShoppingScreen extends JFrame{
 							}
 						}
 					}
-					
+
 					//if everything above is a success assign appropriate values for each type
 					if(found == true) {
 						if(selectedType.equals("Luxury")) {
@@ -198,7 +198,7 @@ public class ShoppingScreen extends JFrame{
 									}
 								}
 							}
-							
+
 							//if everything above is a success assign appropriate values for each type
 							if(found == true) {
 								if(selectedType.equals("Luxury")) {
@@ -216,31 +216,32 @@ public class ShoppingScreen extends JFrame{
 									rate = 5;
 									price = 20 * Integer.parseInt(quantity.getText());
 								}
-								
+
 								//calculate the VAT
 								vatAmount = rate * (price / 100);
 								totalAfterVat = price + vatAmount;
-								
+
 								//display the VAT
 								showPrice.setText("Price for this item (without VAT): €" + price);
 								showVat.setText("VAT(" + rate + "%): €" + vatAmount);
 								showTotal.setText("Total (with VAT): €" + totalAfterVat);
 							}
 						}
-						
+
 						//calculate the VAT
 						vatAmount = rate * (price / 100);
 						totalAfterVat = price + vatAmount;
-						
+
 						//display the VAT
 						showPrice.setText("Price for this item (without VAT): €" + price);
 						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
 						showTotal.setText("Total (with VAT): €" + totalAfterVat);
 					}
-				});
-				
-				//
-		
+				}
+			}});
+
+		//
+
 		//actionListener for the adding to basket button
 		addToBasket.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -253,7 +254,7 @@ public class ShoppingScreen extends JFrame{
 						itemsInBasket.add(basket);	
 						//update the stock numbers of that item
 						item.setItemQuantity(item.getItemQuantity() - Integer.parseInt(quantity.getText()));
-						}
+					}
 				}
 				//clear all fields so the user can buy more items if they want
 				selectedItemCombo.removeAllItems();
@@ -264,33 +265,32 @@ public class ShoppingScreen extends JFrame{
 				vatRate.setText("");
 			}
 		});
-		
+
 		//actionListener for the viewing the basket button
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (ShoppingBasket order : itemsInBasket) {
 					itemArea.append(order + "\n");
 				}
-//				itemsInBasket.remove(order);
-		}
-			
+			}
+
 		});
-		
+
 		//actionListener for the calculating the basket button
 		completeCost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (ShoppingBasket order : itemsInBasket) {
-					 displayCost += order.getCost();
+					displayCost += order.getCost();
 				}
 				JOptionPane.showMessageDialog(null, "Total : " + displayCost, "InfoBox", JOptionPane.INFORMATION_MESSAGE);
 				double totalCost = 0;
-								 
+
 				//create the order with the items in the basket and total cost
 				order = new Order(itemsInBasket, totalCost);
-		}
-			
+			}
+
 		});
-		
+
 		//actionListener for the back to menu button
 		backToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -298,10 +298,10 @@ public class ShoppingScreen extends JFrame{
 				dispose();
 			}
 		});
-		
+
 		// add elements to the panel and add panel to the JFrame
 		itemArea.setEditable(false);
-		
+
 		panel.add(comboLabel);
 		panel.add(itemCombo, "split 2");
 		panel.add(okButton, "wrap");
@@ -321,7 +321,7 @@ public class ShoppingScreen extends JFrame{
 		panel.add(backToMenu, "wrap");
 		panel.add(bottomScrollPane, "span");
 		add(panel);
-		
+
 		// set frame properties
 		setTitle("Shopping Basket Screen");
 		setSize(580, 600);
