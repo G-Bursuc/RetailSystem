@@ -33,10 +33,11 @@ public class InputItem extends JFrame{
 		JButton enterButton = new JButton("Enter Item");
 		JButton exit = new JButton("Exit");
 
-		//reads data from textfields and creates a product object using the data
+		//reads data from textfields 
 			enterButton.addActionListener(new ActionListener() {
 				boolean itemFound = false;
 					public void actionPerformed(ActionEvent e) {
+						// checks if itemID exists
 						for (Item item: iList)	{
 							if(item.getItemID() == Integer.parseInt(itemID.getText())) {
 								itemFound = true;
@@ -50,6 +51,7 @@ public class InputItem extends JFrame{
 						else if (itemFound == true)
 						{
 							int itemQuantity = Integer.parseInt(quantity.getText());
+							// checks item quanity and quantity entered
 							for (Item item : iList) {
 								if (itemQuantity > item.getItemQuantity()) {
 									JOptionPane.showMessageDialog(null, "There are not enough items in stock", "Alert", JOptionPane.WARNING_MESSAGE);

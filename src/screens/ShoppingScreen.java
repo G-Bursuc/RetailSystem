@@ -228,6 +228,7 @@ public class ShoppingScreen extends JFrame{
 			}
 		});
 		
+		//actionListener for the viewing the basket button
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (ShoppingBasket order : itemsInBasket) {
@@ -238,6 +239,7 @@ public class ShoppingScreen extends JFrame{
 			
 		});
 		
+		//actionListener for the calculating the basket button
 		completeCost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				for (ShoppingBasket order : itemsInBasket) {

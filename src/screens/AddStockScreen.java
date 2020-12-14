@@ -14,7 +14,6 @@ import objects.ShoppingBasket;
 public class AddStockScreen extends JFrame {
 	ArrayList<Item> list = null;
 	Item aItem;
-
 	
 	public AddStockScreen(ArrayList<Item> itemList) {
 		list = itemList;
