@@ -31,8 +31,6 @@ public class ShoppingScreen extends JFrame{
 	private Item chosenItem;
 	//total cost of each item
 	private double totalAfterVat = 0;
-	//total cost for the order
-	private double totalCost = 0;
 	
 	public ShoppingScreen(ArrayList<Item> itemList, Order shoppingBasket) {
 		//copy the elements of the original list to the declared list of items
@@ -135,7 +133,6 @@ public class ShoppingScreen extends JFrame{
 				double price = 0;
 				double rate = 0;
 				double vatAmount = 0;
-				double totalAfterVat = 0;
 				boolean found = false;
 				
 				//if there is no item selected display message
@@ -189,9 +186,9 @@ public class ShoppingScreen extends JFrame{
 						totalAfterVat = price + vatAmount;
 						
 						//display the VAT
-						showPrice.setText("Price for this item (without VAT): â‚¬" + price);
-						showVat.setText("VAT(" + rate + "%): â‚¬" + vatAmount);
-						showTotal.setText("Total (with VAT): â‚¬" + totalAfterVat);
+						showPrice.setText("Price for this item (without VAT): €" + price);
+						showVat.setText("VAT(" + rate + "%): €" + vatAmount);
+						showTotal.setText("Total (with VAT): €" + totalAfterVat);
 					}
 				}
 			}
@@ -211,8 +208,6 @@ public class ShoppingScreen extends JFrame{
 						item.setItemQuantity(item.getItemQuantity() - Integer.parseInt(quantity.getText()));
 						}
 				}
-				//create the order with the items in the basket
-				order = new Order(itemsInBasket, totalCost);
 				//clear all fields so the user can buy more items if they want
 				selectedItemCombo.removeAllItems();
 				quantity.setText("");
@@ -233,8 +228,9 @@ public class ShoppingScreen extends JFrame{
 		totalCost.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				double totalCost = 0;
-								
-				
+								 
+				//create the order with the items in the basket and total cost
+				order = new Order(itemsInBasket, totalCost);
 		}
 			
 		});

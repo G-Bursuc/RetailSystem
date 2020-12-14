@@ -30,6 +30,7 @@ public class ChangeScreen extends JFrame{
 		JTextField paymentField = new JTextField(20);
 		JButton calculateBttn = new JButton("Calculate Change");
 		JButton exitBttn = new JButton("Exit");
+		JButton clear = new JButton("clear");
 
 		// check if an order item (shopping basket) exists in the system yet
 		if (basket == null) // if empty, then leave amountField empty
@@ -57,6 +58,14 @@ public class ChangeScreen extends JFrame{
 			}
 		});
 
+		// button that clears the calculator fields
+		clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				amountField.setText("");
+				paymentField.setText("");
+			}
+		});
+				
 		// button that closes the change calculator window
 		exitBttn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,7 +79,8 @@ public class ChangeScreen extends JFrame{
 		panel.add(amountField, "wrap");
 		panel.add(paymentLabel, "wrap");
 		panel.add(paymentField, "wrap");
-		panel.add(calculateBttn, "wrap");
+		panel.add(calculateBttn, "split 2");
+		panel.add(clear, "wrap");
 		panel.add(exitBttn);
 		add(panel);
 
